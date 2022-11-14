@@ -9,7 +9,6 @@ import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -56,7 +55,9 @@ public class Controller implements Initializable {
 		model.destinatarioEmailProperty().bindBidirectional((destinatarioEmail.textProperty()));
 		model.asuntoEmailProperty().bindBidirectional((asuntoEmail.textProperty()));
 		model.areaMensajeProperty().bindBidirectional((areaMensaje.textProperty()));
-		// sslOption.selectedProperty().bind(model.sslOptionProperty());
+		model.sslOptionProperty().bind(sslOption.selectedProperty());
+		//sslOption.selectedProperty().bind(model.sslOptionProperty());
+		
 	}
 
 	public GridPane getView() {
@@ -90,7 +91,8 @@ public class Controller implements Initializable {
 			email.setHostName(model.getNomServer());
 			email.setSmtpPort(model.getNumPuerto());
 			email.setAuthenticator(new DefaultAuthenticator(model.getRemitenteEmail(), model.getPassEmail()));
-			email.setSSLOnConnect(sslOption.isSelected());
+			//email.setSSLOnConnect(sslOption.isSelected());
+			email.setSSLOnConnect(model.isSslOption());
 			email.setFrom(model.getRemitenteEmail());
 			email.setSubject(model.getAsuntoEmail());
 			email.setMsg(model.getAreaMensaje());
